@@ -1,6 +1,6 @@
 <html>
     <head\>
-        <title>inner</title>
+        <title>innerJquery</title>
         <script
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -16,35 +16,26 @@
 
     <script >
         $(function () {
-            $("btn").on({
-                click: function () {
 
-                    $("text").html("클릭됨");
+            $("#btn").on({
+
+                click: function() {
+
+                    $("#text").html("클릭됨");
                 },
-                mouseout: function () {
-                    $("text").html("마우스 떠남");
+
+                mouseout:function() {
+                    $("#text").html("마우스 떠남");
                 }
             });
 
-            $("#btn").on("mouseover", function () {
-                $("text").html("마우스 올라감");
+            $("#btn").on("mouseover", function() {
+                $("#text").html("마우스 올라감");
             });
 
-            $("#btn2").on("click", function () {
-                alert($("text").html());
+            $("#btn2").on("click",function() {
+                alert($("#text").html() );
             });
-
-        })
-
-        /*
-    $(function () {
-         $("#btn").on("click", function() {
-             $("#text").html("클릭됨");
-         },
-          mouseout: function() {
-            $("text").html("마우스 떠남");
-         }
-         )
-    }) */
+        });
     </script>
 </html>
