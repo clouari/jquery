@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>제이쿼리 기사 등록하기</title>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+        <style>
+            body {
+                text-align: center;
+            }
+            div {
+                text-align: left;
+                display: inline-block;
+                border: 1px solid #000000;
+            }
+            .main {
+                width: 400px;
+                min-height: 500px;
+            }
+            .head {
+                width: 400px;
+                height: 60px;
+                line-height: 60px;
+                text-indent: 10px;
+                background-color: blue;
+                color: #FFFFFF;
+            }
+            .body {
+                width: 400px;
+                min-height: 440px;
+                background-color: cadetblue;
+                text-indent: 10px;
+                padding-top: 10px;
+            }
+            .list {
+                width: 300px;
+                height: 45px;
+                line-height: 45px;
+                background-color: #FFFFFF;
+                position: relative;
+                margin: 20px;
+                left: 10px;
+
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="main">
+            <div class="head">기사등록하기</div>
+            <div class="body" id="newsbody">
+                기사 등록하기
+            </div>
+        </div>
+
+        <button>기사 등록하기</button>
+
+    </body>
+    <script>
+
+        $(function () {
+            $("button").on("click", function () {
+                let name = prompt("작성자 명을 등록하세요");
+                let news = prompt("기사를 등록하세요");
+                $("#newsbody").append(
+                    `<div class="list">` + name + + ' ' + news + `</div>`
+                );
+            })
+        });
+
+    </script>
+</html>
