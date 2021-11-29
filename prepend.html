@@ -47,11 +47,19 @@
                 $("#text").prepend(source2);
             })
 
-            // $("#appendTo").on("click",function() {
-            //     count++;
-            //     source1 = "<div> append  "+count+" </div>";
-            //     $("source1").append($text);
-            // })
+            $("#appendTo").on("click",function() {
+                count++;
+                source1 = "<div> append  "+count+" </div>";
+                $("source1").append($text);
+            })
+
+            $("#prependTo").on("click",function() {
+                count++;
+                source1 = "<div> prepend  "+count+" </div>";
+                $("source2").prepend($text);
+            })
+
+
 
         });
     </script>
