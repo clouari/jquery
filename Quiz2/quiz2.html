@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>css이용해서 jquery로 만들기</title>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+        <style>
+            div {
+                display: inline-block;
+                text-align: center;
+                border: 1px solid black;
+                position: absolute;
+            }
+            .D2 {
+                width: 400px;
+                height: 200px;
+                line-height: 200px;
+            }
+            .D1 {
+                width: 200px;
+                height: 400px;
+                line-height: 400px;
+            }
+
+            #div1 {
+                top: 0;
+                left: 200px;
+                background-color: blueviolet;
+            }
+            #div2 {
+                top: 200px;
+                left: 400px;
+                background-color: palevioletred;
+            }
+            #div3 {
+                top: 400px;
+                left: 0;
+                background-color: antiquewhite;
+            }
+            #div4 {
+                top: 0;
+                left: 0;
+                background-color: tomato;
+            }
+            .image {
+                top: 200px;
+                left: 200px;
+                z-index: -1;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body></body>
+    <script>
+        $(function () {
+            $("body").html(
+                `        <div class="D2" id="div1">1</div>
+        <div class="D1" id="div2">2</div>
+        <div class="D2" id="div3">3</div>
+        <div class="D1" id="div4">4</div>
+        <div class="image"><img width="200px" height="200px" src="IMG_7889.jpg"></div>`
+            )
+        })
+    </script>
+
+</html>
