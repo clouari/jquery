@@ -1,0 +1,74 @@
+<html>
+    <head\>
+        <title>w3school effect</title>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+        <style>
+
+            p {
+                display: inline-block;
+                width: 500px;
+                height: 50px;
+                background-color: cadetblue;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <button id="hide">hide</button>
+        <br/>
+        <button id="show">show</button>
+        <br/>
+        <button id="fadeIn">fadeIn</button>
+        <br/>
+        <button id="fadeOut">fadeOut</button>
+        <br/>
+        <button id="slideUp">slideUp</button>
+        <br/>
+        <button id="slideDown">slideDown</button>
+        <br/>
+        <button id="before">before</button>
+        <br/>
+        <button id="after">after</button>
+
+        <p>텍스트 입니다</p>
+
+    </body>
+
+    <script >
+        $(document).ready(function () { // 사용할 준비가 되면( 소스가 로딩이 될 준비가 되면)
+
+            $("#hide").click(function () {
+                $("p").hide();
+            });
+
+            $("#show").click(function () {
+                $("p").show();
+            });
+            $("#fadeIn").click(function () {
+                $("p").fadeIn(1000);
+            });
+            $("#fadeOut").click(function () {
+                $("p").fadeOut(500);
+            });
+            $("#slideUp").click(function () {
+                $("p").slideUp(1000, function () {
+                    alert("slideUp 완료");
+                });
+            });
+            $("#slideDown").click(function () {
+                $("p").slideDown(500);
+            });
+            $("#before").click(function () {
+                $("p").before("<b>⭐️before⭐️</b>");
+            });
+            $("#after").click(function () {
+                $("p").after("<b>⚾️after⚾️</b>");
+            });
+
+        });
+    </script>
+</html>
