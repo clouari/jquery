@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>checkbox 실습</title>
+    </head>
+    <style>
+        .title{
+            width: 200px;
+            text-align: center;
+        }
+    </style>
+    <script>
+
+        $(document).ready(function() {
+            $("#check").click(function() {
+                $("input:checkbox[name=mycheck]").attr("checked", true);
+                $("input:checkbox[name=mycheck]").attr("checked", false);
+            })
+        });
+        
+    </script>
+    <body>
+        <table border="1">
+            <tr>
+                <th><input type="checkbox" id="check">확인</th>
+                <th class="title">제목</th>
+                <th>글쓴시간</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="mycheck" value="1"></td>
+                <td class="title">111111</td>
+                <td>11:11:00</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="mycheck" value="1"></td>
+                <td class="title">22222</td>
+                <td>11:11:00</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="mycheck" value="1"></td>
+                <td class="title">asdasd</td>
+                <td>11:11:00</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="mycheck" value="1"></td>
+                <td class="title">ㅁㄴㄴㅇㄹ</td>
+                <td>11:11:00</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="mycheck" value="1"></td>
+                <td class="title">ㄴㅂㅁ5555</td>
+                <td>11:11:00</td>
+            </tr>
+        </table>
+    </body>
+</html>
