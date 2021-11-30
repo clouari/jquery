@@ -9,23 +9,36 @@
             body{
                 background-color: brown;
             }
-            .red-ball {
+            .ball {
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 50px;
                 height: 50px;
                 background: rgb(255, 255, 254);
+                border-radius: 50%;
             }
+            p{
+              color: white;  
+            }
+            
         </style>
     </head>
     <body>
-        <div class="red-ball"></div>
+        <div class="ball"></div>
+        <p>가</p>
+        <p>나다라</p>
+        <p>마바사아</p>
     </body>
     <script>
         $(document).mousemove(function (e) {
-            $('.red-ball').css("top", e.pageY);
-            $('.red-ball').css("left", e.pageX);
+            $('.ball').css("top", e.pageY);
+            $('.ball').css("left", e.pageX);
+        });
+        $(document).ready(function() {
+            $("p").click(function() {
+                $(this).hide();
+            });
         });
     </script>
 </html>
