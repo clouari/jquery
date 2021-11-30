@@ -1,0 +1,30 @@
+
+<html>
+    <head\>
+        <title>onload</title>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    </head>
+    
+    <body>
+
+        <p>1</p>
+        <p>12</p>
+        <p>123</p>
+        <p>1234</p>
+
+    </body>
+
+    <script >
+        $(document).ready(function() {   // 사용할 준비가 되면( 소스가 로딩이 될 준비가 되면)
+        
+            $("p").click(function() {    // 실행할 이벤트를 바인딩 시킨다. 
+
+                $(this).hide();  //어디에 있던 내가 클릭할 애들을 사라지게 할 거야!
+            });
+        });
+
+    </script>
+</html>
