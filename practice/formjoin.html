@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>혼자 해 보는 formjoin</title>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+        <script>
+            $(function () {
+                $("#frm").submit(function () {
+                    if ($("#userId").val().trim() == "") {
+                        alert("아이디를 입력하세요.");
+                        $("#userId").focus();
+                        return false;
+                    }
+                    if ($("#userPw").val().trim() == "") {
+                        alert("비밀번호를 입력하세요.");
+                        $("#userPw").focus();
+                        return false;
+                    }
+                    if ($(".gender").val().trim() == "") {
+//                        $("input:radio[name=gender]:checked").val()
+                        alert("성별을 선택하세요");
+                        $(".gender").focus();
+                        return false;
+                    }
+                    if ($("#sel").val().trim() == "") {
+                        alert("직업을 한 개 이상 선택해주세요");
+                        $("#sel").focus();
+                        return false;
+                    }
+                    if ($(".hobby").val().trim() == "") {
+//                        $("input:checkbox[name=hobby]:checked").length;
+
+                        alert("취미를 3개 이상 선택 해 주세요");
+                        $(".hobby").focus();
+                        return false;
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <form name="frm" action="#" id="frm">
+            아이디
+            <input type="email" name="userId" id="userId"/><br/>
+            비밀번호
+            <input type="password" name="userPw" id="userPw" minlength="5"><br/>
+            성별
+            <input type="radio" value="male" name="gender" id="M">
+            남자
+            <input type="radio" value="female" name="gender" id="F">
+            여자<br/>
+            직업
+            <select id="sel">
+                <option value=""></option>
+                <option value="1">개발자</option>
+                <option value="2">교사</option>
+                <option value="3">사무직회사원</option>
+                <option value="4">학생</option>
+                <option value="5">전업주부</option>
+            </select>
+            <br/>
+            취미
+            <br/>
+            <input type="checkbox" class="hobby" value="1">개발
+            <input type="checkbox" class="hobby" value="2">게임
+            <input type="checkbox" class="hobby" value="3">낚시
+            <br/>
+            <input type="checkbox" class="hobby" value="4">운동
+            <input type="checkbox" class="hobby" value="5">독서
+            <input type="checkbox" class="hobby" value="6">음악감상
+            <br/>
+            <input type="reset" value="취소">
+            <input type="submit" value="회원가입"/>
+        </form>
+    </body>
+</html>
