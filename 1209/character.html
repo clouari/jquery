@@ -33,6 +33,22 @@
     </body>
 
     <script>
+
+        var timmer = 0;
+
+        function callconsole1() {
+            console.log('111111');
+        }
+        function callconsole2() {
+            timmer++;
+            console.log(timmer);
+        }
+        
+        // setInterval(callconsole2,5000);
+
+
+
+
         $(function () {
             $("#up").click(function () {
                 $("#move").css("top", "-=50px");
