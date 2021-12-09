@@ -41,6 +41,16 @@
                 display: none;
             }
 
+            #killer{
+                width: 100px;
+            }
+
+            #killer_block{
+                position: absolute;
+                left: 10px;
+                bottom: 10px;
+            }
+
         </style>
     </head>
 
@@ -55,9 +65,15 @@
                 <img src="gb.gif" id="goomba">
             </div>
 
+            <div id="killer_block">
+                <img src="1019657604fire-explosion-animation-2.gif" id="killer">
+            </div>
+
         </div>
 
         <script>
+
+
             var jump = false;
 
             function goomba_start() {
@@ -67,41 +83,77 @@
                 console.log(random_speed);
 
                 $("#goomba_block").animate({"left":"0px"},random_speed,function() {
-
+                    // 굼바가 왼쪽으로 도착했을 때 이후에 해야할 행동을 정해줌
                     $("#goomba_block").css("left","");
+                    // 굼바 위치를 초기화시킴
                     $("#goomba_block").css("right","10px");
+                    // 제일 오른쪽에서 출발하는데
                     $("#goomba_block").hide();
-
-                    setTimeout(goomba_start,random_speed * 1000);
+                    // 보이면 안좋으니까, 안보이게 숨기고
+                    setTimeout(goomba_start,random_speed - 1500);
+                    // 기다렸다가 start! (재귀함수)
+                    
                 });
 
+            } // 여기까지 굼바
 
+            function mario_down() {
+
+                var beat = Number($("#goomba_block").css("left").replace("px",""));
+
+                if(beat <= 110 && beat > 80 && jump == false) {
+                    console.log(beat,jump);
+                    alert("마리오가 사망했습니다.");
+                }
             }
 
+            // 굼바를 피하지 못하면 마리오 사망
+
+
+            
+            
             $(function () {
                 $("body").keydown(function (event) {
+                    // 밑에 키 코드 마다 정해줄 액션 설정해주기
                     if (event.keyCode == "32" && jump == false) {
                         jump = true;
+                    // 32번인 스페이스바를 누르면, 마리오가 밑에서 300px 까지 뛰었다가, 
                         $("#mario_block")
-                            .animate({
-                                "bottom": "300px"
-                            }, 500)
-                            .animate({
-                                "bottom": "10px"
-                            }, 500, function () {
-                                jump = false;
-                            });
+                        .animate({
+                            "bottom": "300px"
+                        }, 500)
+                        // 밑에서 10px 위치로 돌아온다.
+                        .animate({
+                            "bottom": "10px"
+                        }, 500, function () {
+                            jump = false;
+                        });
                     }
-                    else if(event.keyCode == 39) {
-                        $("#mario_block").animate({"left":"+=50px"},"fast"); 
-                    } 
-                    else if(event.keyCode == 37) {
-                        $("#mario_block").animate({"left":"-=50px"},"fast");
-                    }
-                })
+                    if(event.keyCode == "13" ) {
+                                $("#killer_block")
+                                .animate({"bottom":"10px"},300)
+                                .animate({"left":"100%"},300,function() {
+                                    
+                                }
+                                   
+                                );
+                            }
+                    // if(event.keyCode == 39) {
+                        //     $("#killer_block").animate({"left":"+=50px"},"fast"); 
+                        // } 
+                        // if(event.keyCode == 37) {
+                            //     $("#mario_block").animate({"left":"-=50px"},"fast");
+                            // }
+                            
+
+                }) 
+                // 여기까지 마리오
 
                 setTimeout(goomba_start,1000);
+                setInterval(mario_down, 10);
+                // 100분의 1초마다 겹쳤는지 겹치지 않았는지 계속 확인한다.
 
+                
             })
 
         </script>
