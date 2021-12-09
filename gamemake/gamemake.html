@@ -75,6 +75,7 @@
 
 
             var jump = false;
+            // var attack = false;
 
             function goomba_start() {
 
@@ -97,6 +98,7 @@
 
             } // 여기까지 굼바
 
+
             function mario_down() {
 
                 var beat = Number($("#goomba_block").css("left").replace("px",""));
@@ -108,6 +110,7 @@
             }
 
             // 굼바를 피하지 못하면 마리오 사망
+
 
 
             
@@ -130,31 +133,44 @@
                         });
                     }
                     if(event.keyCode == "13" ) {
-                                $("#killer_block")
-                                .animate({"bottom":"10px"},300)
-                                .animate({"left":"100%"},300,function() {
-                                    
-                                }
-                                   
-                                );
-                            }
-                    // if(event.keyCode == 39) {
-                        //     $("#killer_block").animate({"left":"+=50px"},"fast"); 
-                        // } 
-                        // if(event.keyCode == 37) {
-                            //     $("#mario_block").animate({"left":"-=50px"},"fast");
-                            // }
-                            
+                    // 13번의 엔터를 누르면
+                        $("#killer_block")
+                        // .animate({"bottom":"10px"},300)
+                    // 킬러블록이 왼쪽에서 100% 까지 나가게 한다.
+                        .animate({"left":"100%"},300)
+                    // 그리고 다시 제일 왼쪽으로 돌아오게 만들기
+                        .animate({"left":"0%"},0);
+                        
+                    }
+                    
+                    // 굼바블록이랑 킬러블록이 만나는 좌표 알기
+                    // if (event.keyCode == "39") {
+                    //     // 37번이 왼쪽,38번이 위, 40번이 아래, 39번이 오른쪽, 32번이 스페이스바
+                    //     $("#killer_block").show();
+                    //     $("#killer_block").css("left", "+=10px");
+                    //     console.log($("#killer_block").css("left"))
+                    //     // left 버튼으로 움직였을때 언제 만나는지 콘솔창에서 확인하는 방법
+                    // }
+                    // if (event.keyCode == "37") {
+                    //     // 37번이 왼쪽,38번이 위, 40번이 아래, 39번이 오른쪽, 32번이 스페이스바
+                    //     $("#goomba_block").show();
+                    //     $("#goomba_block").css("left", "-=10px");
+                    //     console.log($("#goomba_block").css("left"))
+                    //     // left 버튼으로 움직였을때 언제 만나는지 콘솔창에서 확인하는 방법
+                    // }
+
+
 
                 }) 
                 // 여기까지 마리오
 
-                setTimeout(goomba_start,1000);
+                setTimeout(goomba_start,2000);
+                // 2초 후에 start
                 setInterval(mario_down, 10);
                 // 100분의 1초마다 겹쳤는지 겹치지 않았는지 계속 확인한다.
 
                 
-            })
+            });
 
         </script>
 
