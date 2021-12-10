@@ -1,0 +1,230 @@
+<html>
+    <head>
+        <title>게임만들기 교수님과 함께</title>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+
+        <style>
+            #view{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+
+            #mario {
+                width: 100px;
+            }
+
+            #goomba {
+                width: 50px;
+            }
+
+            #bg {
+                border: 1px solid black;
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+
+            #mario_block {
+                position: absolute;
+                left: 10px;
+                bottom: 10px;
+            }
+
+            #goomba_block{
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                display: none;
+            }
+
+            #killer{
+                width: 100px;
+            }
+
+            #killer_block{
+                display: none;
+                position: absolute;
+                left: 10px;
+                bottom: 10px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div id="bg">
+            <img src="bg_720.jpeg" id="view">
+            <div id="mario_block">
+                <img src="man.gif" id="mario">
+            </div>
+
+            <div id="goomba_block">
+                <img src="gb.gif" id="goomba">
+            </div>
+
+            <div id="killer_block">
+                <img src="1019657604fire-explosion-animation-2.gif" id="killer">
+            </div>
+
+        </div>
+
+        <script>
+
+
+            var jump = false;
+            var killer = false;
+
+
+
+
+
+            function goomba_start() {
+
+                let random_speed = Math.floor(Math.random() *1000 + 2000);
+                $("#goomba_block").show();
+                console.log(random_speed);
+
+                $("#goomba_block").animate({"left":"0px"},random_speed,function() {
+                    // 굼바가 왼쪽으로 도착했을 때 이후에 해야할 행동을 정해줌
+                    $("#goomba_block").css("left","");
+                    // 굼바 위치를 초기화시킴
+                    $("#goomba_block").css("right","10px");
+                    // 제일 오른쪽에서 출발하는데
+                    $("#goomba_block").hide();
+                    // 보이면 안좋으니까, 안보이게 숨기고
+                    setTimeout(goomba_start,random_speed - 1500);
+                    // 기다렸다가 start! (재귀함수)
+                    
+                });
+
+            } // 여기까지 굼바
+
+
+            function mario_down() {
+
+                var beat = Number($("#goomba_block").css("left").replace("px",""));
+
+                if(beat <= 110 && beat > 80 && jump == false) {
+                    console.log(beat,jump);
+                    // alert("마리오가 사망했습니다.");
+                $("#mario_block").hide(500);
+                $jump = true;
+                }
+            }
+
+            // 굼바를 피하지 못하면 마리오 사망
+
+            function killer_start() {
+                $("#killer_block").show(30);
+                killer = true;
+                $("#killer_block").animate({"left":"950px"},300,function() {
+                    killer = false;
+
+                    // 시간은 빨라야 하니까 1초 안에
+                    $("#killer_block").hide(30);
+                    $("#killer_block").css("left","50px");
+
+                })
+            }
+
+
+            function goomba_down()
+                {
+                    var beat1 = Number($("#goomba_block").css("left").replace("px",""));
+                    var beat2 = Number($("#killer_block").css("left").replace("px",""));
+                    let random_speed = Math.floor(Math.random() * 1000);
+
+                    console.log(beat1 - beat2);
+
+                    if(beat1 - beat2 < 50 ) 
+                    {
+                        console.log("굼바다운");
+                        killer = false;
+                        $("#killer_block").hide();
+                        $("#killer_block").css("left","50");
+
+                        $("#goomba_block").stop();
+
+                        $("#goomba_block").css("left","");
+                        $("#goomba_block").css("right","10px");
+                        $("#goomba_block").hide();
+                        setTimeout(goomba_start,random_speed - 1000);
+                    }
+
+                }
+
+            
+            
+            
+            $(function () {
+                $("body").keydown(function (event) {
+                    // 밑에 키 코드 마다 정해줄 액션 설정해주기
+                    if (event.keyCode == "32" && jump == false) {
+                        jump = true;
+                    // 32번인 스페이스바를 누르면, 마리오가 밑에서 300px 까지 뛰었다가, 
+                        $("#mario_block")
+                        .animate({
+                            "bottom": "300px"
+                        }, 500)
+                        // 밑에서 10px 위치로 돌아온다.
+                        .animate({
+                            "bottom": "10px"
+                        }, 500, function () {
+                            jump = false;
+                        });
+
+                        
+                    }
+                    if (event.keyCode == "13" && killer == false) {
+                        killer_start();
+                    }
+
+
+                    // if(event.keyCode == "13" ) {
+                    // // 13번의 엔터를 누르면
+                    //     $("#killer_block")
+                    //     // .animate({"bottom":"10px"},300)
+                    // // 킬러블록이 왼쪽에서 100% 까지 나가게 한다.
+                    //     .animate({"left":"100%"},300)
+                    // // 그리고 다시 제일 왼쪽으로 돌아오게 만들기
+                    //     .animate({"left":"0%"},0);
+                        
+                    // }
+                    
+                    // 굼바블록이랑 킬러블록이 만나는 좌표 알기
+                    // if (event.keyCode == "39") {
+                    //     // 37번이 왼쪽,38번이 위, 40번이 아래, 39번이 오른쪽, 32번이 스페이스바
+                    //     $("#killer_block").show();
+                    //     $("#killer_block").css("left", "+=10px");
+                    //     console.log($("#killer_block").css("left"))
+                    //     // left 버튼으로 움직였을때 언제 만나는지 콘솔창에서 확인하는 방법
+                    // }
+                    // if (event.keyCode == "37") {
+                    //     // 37번이 왼쪽,38번이 위, 40번이 아래, 39번이 오른쪽, 32번이 스페이스바
+                    //     $("#goomba_block").show();
+                    //     $("#goomba_block").css("left", "-=10px");
+                    //     console.log($("#goomba_block").css("left"))
+                    //     // left 버튼으로 움직였을때 언제 만나는지 콘솔창에서 확인하는 방법
+                    // }
+
+
+
+                }) 
+                // 여기까지 마리오
+
+                setTimeout(goomba_start,2000);
+                // 2초 후에 start
+                setInterval(mario_down, 10);
+                // 100분의 1초마다 겹쳤는지 겹치지 않았는지 계속 확인한다.
+                setInterval(goomba_down,10);
+
+                
+            });
+
+        </script>
+
+    </html>
