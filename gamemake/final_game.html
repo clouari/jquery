@@ -34,7 +34,6 @@
             height: 100%;
         }
 
-
         #start {
             position: absolute;
             top: 50%;
@@ -69,7 +68,7 @@
             left: 450px;
         }
 
-        .start{
+        .start {
             display: inline-block;
             background-color: tomato;
             color: white;
@@ -77,7 +76,6 @@
             height: 40px;
             border-radius: 20px;
         }
-
     </style>
     <body>
 
@@ -93,7 +91,7 @@
 
         <div id="close">
             게임오버
-            <br /><br />
+            <br/><br/>
             <button class="start">게임다시하기</button>
         </div>
 
@@ -165,6 +163,7 @@
         }
 
         function killer_start() {
+            $('#mario').prop('src', '20161218215154_weqnoqcw.gif');
             $("#killer_block").show(30);
             killer = true;
             $("#killer_block").animate({
@@ -173,6 +172,8 @@
                 killer = false;
                 $("#killer_block").hide();
                 $("#killer_block").css("left", "50px");
+                $('#mario').prop('src', 'man.gif');
+
             })
 
         }
@@ -219,7 +220,6 @@
             $(".start").click(function () {
                 game();
             })
-
 
             $("body").keydown(function (event) {
 
