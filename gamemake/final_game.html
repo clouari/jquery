@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>내가 해 보는 마리오 보완</title>
+        <title>랭킹 만들어보기</title>
 
         <script
             src="https://code.jquery.com/jquery-3.6.0.js"
@@ -76,12 +76,21 @@
             height: 40px;
             border-radius: 20px;
         }
+        
+        #attack_mario{
+            display: none;
+            size: 40px;
+        }
     </style>
     <body>
 
         <div id="main">
             <img src="backgroundani.gif" id="view">
-            <div id="mario_block"><img id="mario" src="man.gif"></div>
+            <div id="mario_block">
+                <img id="mario" src="man.gif">
+                <img id="attack_mario" src="g20161218215154_weqnoqcw.gif">
+            </div>
+            
             <div id="gumba_block"><img id="gumba" src="gb.gif"></div>
             <div id="killer_block"><img id="killer" src="1019657604fire-explosion-animation-2.gif"></div>
             <div id="score">점수 :
@@ -163,7 +172,7 @@
         }
 
         function killer_start() {
-            $('#mario').prop('src', '20161218215154_weqnoqcw.gif');
+            $('#mario').prop('src', '20161218215154_weqnoqcw.gif')
             $("#killer_block").show(30);
             killer = true;
             $("#killer_block").animate({
