@@ -1,0 +1,551 @@
+<html>
+    <head>
+        <title>mario랭킹 키 추가하기(화살표위에)</title>
+
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+        <style>
+
+            html, body {
+                width: 100%;  
+                height: 100%;
+                background: #FF7777;
+                -webkit-font-smoothing: antialiased;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }   
+
+            h1 {
+                height: 100px;
+            }
+
+            h1 span {
+                position: relative;
+                top: 20px;
+                display: inline-block;
+                animation: bounce .3s ease infinite alternate;
+                font-family: 'Titan One', cursive;
+                font-size: 80px;
+                color: #FFF;
+                text-shadow: 0 1px 0 #CCC,
+                    0 2px 0 #CCC,
+                    0 3px 0 #CCC,
+                    0 4px 0 #CCC,
+                    0 5px 0 #CCC,
+                    0 6px 0 transparent,
+                    0 7px 0 transparent,
+                    0 8px 0 transparent,
+                    0 9px 0 transparent,
+                    0 10px 10px rgba(0, 0, 0, .4);
+            }
+
+                h1 span:nth-child(2) { animation-delay: .1s; }
+                h1 span:nth-child(3) { animation-delay: .2s; }
+                h1 span:nth-child(4) { animation-delay: .3s; }
+                h1 span:nth-child(5) { animation-delay: .4s; }
+                h1 span:nth-child(6) { animation-delay: .5s; }
+                h1 span:nth-child(7) { animation-delay: .6s; }
+                h1 span:nth-child(8) { animation-delay: .7s; }
+
+            @keyframes bounce {
+            100% {
+                top: -20px;
+                text-shadow: 0 1px 0 #CCC,
+                    0 2px 0 #CCC,
+                    0 3px 0 #CCC,
+                    0 4px 0 #CCC,
+                    0 5px 0 #CCC,
+                    0 6px 0 #CCC,
+                    0 7px 0 #CCC,
+                    0 8px 0 #CCC,
+                    0 9px 0 #CCC,
+                    0 50px 25px rgba(0, 0, 0, .2);
+                }
+            }
+
+            body {
+                margin: 0;
+            }
+            #bg {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                overflow: hidden;
+                display: none;
+            }
+            #bgBlock {
+                width: 100%;
+                height: 100%;
+            }
+            #attack_mario{
+                display: none;
+                size: 40px;
+            }
+            #jumping{
+                display: none;
+                size: 40px;
+            }
+
+            #marioBlock {
+                width: 100px;
+            }
+            .goombaBlock {
+                width: 60px;
+            }
+            #killerBlock {
+                width: 100px;
+            }
+            #mario {
+                bottom: 0;
+                left: 100px;
+                position: absolute;
+            }
+            #goomba {
+                bottom: 0;
+                right: 10px;
+                display: none;
+                position: absolute;
+            }
+            #killer {
+                display: none;
+                position: absolute;
+                left: -1000px;
+                bottom: 0;
+            }
+            #rankBody{
+                border: 1px solid #ffebb5; 
+                background-color: #ffebb5; 
+                border-radius: 8px;
+                box-shadow: inset 0 0 8px #deb13a;
+                width: 160px;;
+
+            }
+            #score {
+                position: absolute;
+                top: 100px;
+                left: 50%;
+            }
+            #replay{
+            display: inline-block;
+            background-color: tomato;
+            color: white;
+            width: 100px;
+            height: 40px;
+            border-radius: 20px;
+            }
+            #start{
+            display: inline-block;
+            background-color: tomato;
+            color: white;
+            width: 100px;
+            height: 40px;
+            border-radius: 20px;
+        }
+            #game_over {
+                position: relative;
+                display: none;
+                color: white;
+                font-size: 50px;
+            }
+            #start_page {
+                position: relative;
+                top: 20px;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div id="bg">
+            <img src="backgroundani.gif" id="bgBlock"/>
+            <div id="score">점수: 0점</div>
+            <div id="mario"><img src="man.gif" id="marioBlock"/>
+            <img id="attack_mario" src="20161218215154_weqnoqcw.gif">
+            <img id="jumping" src="mario-super-mario.gif">
+            </div>
+            <div id="goomba"><img src="gb.gif" class="goombaBlock"/></div>
+            <div id="killer"><img src="1019657604fire-explosion-animation-2.gif" id="killerBlock"/></div>
+        </div>
+        <div id="game_over">
+            <center>
+                <b>game over</b>
+                <div><img src="mario-ok.gif"></div>
+                <br />
+                <button id="replay">다시하기</button>
+            </center>
+        </div>
+        <div id="start_page">
+            <center>
+                <h1>
+                    <span>J</span>
+                    <span>S</span>
+                    <span>마</span>
+                    <span>리</span>
+                    <span>오</span>
+                    <span>게</span>
+                    <span>임</span>
+                    <span>!</span>                    
+                </h1>
+                <br /><br />
+                <b>닉네임 :</b>
+                <input type="text" name="player" id="id" placeholder="3글자로 입력하세요"/>
+                <br/><br/>
+                <div>
+                    <button id="start">게임시작</button>
+                </div><br/><br/>
+                <div>
+                    <table border="1" id='rankBody'>
+                        <th>
+                         랭킹
+                        </th>
+                        <th>
+                         이름
+                        </th>
+                        <th>
+                         점수
+                        </th>
+                    </table>
+                </div>
+            </center>
+        </div>
+    </body>
+    <script>
+
+
+        var score = 0; 
+        var storage; 
+        var isJump = false; 
+        var isDoubleJump = false;
+        var isKill = false; 
+        var isgoombaDown1 = false; 
+        var isMarioDown = false; 
+        var mario = $("#mario"); 
+        var goomba = $("#goomba"); 
+        var killer = $("#killer"); 
+        var player; 
+        var goobaInterval1;
+        var marioInterval1;
+        var ranks = [];
+        var ranking = $("#rankBody");
+
+        
+        // 시작 버튼에 마우스를 올리면 색상 변화
+        $("#start").hover(function () {
+        $(this).css("background-color", "pink"),
+        $(this).css("color", "black");
+          }, function () {
+        $(this).css("background-color", "teal"),
+        $(this).css("color", "white");
+            });
+
+        // 리플레이 버튼에 마우스를 올리면 색상 변화
+        $("#replay").hover(function () {
+        $(this).css("background-color", "pink"),
+        $(this).css("color", "black");
+          }, function () {
+        $(this).css("background-color", "teal"),
+        $(this).css("color", "white");
+            });
+
+        function goombaStart(goomba) {
+            // 굼바 스피드 랜덤
+            let speed = Math.floor(Math.random() * 1000) + 2000;
+            // 굼바 등장
+            goombaInit(goomba);
+            goomba.show();
+
+            // 굼바 왼쪽 끝으로 이동
+            goomba.animate({
+                left: "-80px"
+            }, speed, function () {
+            // 마리오가 생존하면 점수 +100
+            score += 100;
+            setScore(score);
+            
+            // 굼바 위치 초기화
+            goombaInit(goomba);
+            goomba.hide();
+            
+            // 굼바 1초 뒤 시작
+            setTimeout(() => goombaStart(goomba), speed - 1000);
+        });
+    }
+    
+    function goombaInit(goomba) {
+        goomba.css("left", "");
+        goomba.css("right", "10px");
+    }
+    
+    // 마리오 공격할 때 이미지 바꾸기
+    function changeMario(input) {
+        if (input) {
+            $("#marioBlock").prop("src", "20161218215154_weqnoqcw.gif");
+            $("#marioBlock").css("width", "200px");
+        } else {
+            $("#marioBlock").prop("src", "man.gif");
+            $("#marioBlock").css("width", "100px");
+        }
+    }
+
+    // 마리오 위에 누를 때 이미지 바꾸기
+    function jumpMario(input) {
+        if(input) {
+            $("#marioBlock").prop("src", "mario-super-mario.gif");
+            $("#marioBlock").css("width", "200px");
+        } else {
+            $("#marioBlock").prop("src", "man.gif");
+            $("#marioBlock").css("width", "100px");
+        }
+    }
+
+
+            // 킬러 동작 시작
+        function killerStart() {
+
+            killer.css("left", "100px");
+            killer.show();
+            isKill = true;
+
+            killer.animate({
+                left: "100%"
+            }, 1000, function () {
+                isKill = false;
+                killer.hide();
+                killer.css("left", "-1000px");
+                changeMario(false);
+            });
+        }
+
+        function goombaDown(goomba, isgoombaDown) {
+            var beat1 = Number(goomba.css("left").replace("px", ""));
+            var beat2 = Number(killer.css("left").replace("px", ""));
+
+            if (collision(killer, goomba)) {
+                // 킬러 초기화
+                killer.stop();
+                isKill = false;
+                killer.hide();
+                killer.css("left", "-1000px");
+                changeMario(false);
+
+                if (!isgoombaDown) {
+                    isgoombaDown = true;
+
+                //굼바 다운 시, 점수 +150
+                    score += 150;
+                    setScore(score);
+
+                // 굼바 기존 동작을 멈추고, 다운 동작
+                    goomba
+                        .stop()
+                        .animate({
+                            bottom: "+=50px"
+                        }, 200)
+                        .animate({
+                            bottom: "-=50px"
+                        }, 200, function () {
+                            goombaInit(goomba);
+                            goomba.hide();
+                            // 굼바 - 1초 뒤, 시작
+                            setTimeout(() => goombaStart(goomba), 1000);
+                            isgoombaDown = false;
+                        });
+                }
+            }
+        }
+
+        function marioDown(goomba, isgoombaDown) {
+            let isCollision = collision(mario, goomba);
+            let leftVal = Number(goomba.css("left").replace("px", ""));
+
+            // 굼바, 마리오 - 굼바 위치체크 & 마리오 점프중x & 굼바 다운중x 일 때, 마리오 다운 처리
+            if (isCollision && !isgoombaDown) {
+                if (!isMarioDown) {
+                    isMarioDown = true;
+
+                    // 굼바 기존 동작을 멈추고 위치 초기화
+                    goomba.stop();
+                    goombaInit(goomba);
+                    goomba.hide();
+
+                    mario
+                        .stop()
+                        .animate({
+                            bottom: "+=50px"
+                        }, 200)
+                        .animate({
+                            bottom: "-200px"
+                        }, 200, function () {
+                            setTimeout(function () {
+                                // 마리오 - 마리오 다운 동작 종료 후 1초 뒤 위치 초기화
+                                mario.css("bottom", "0px");
+                                changeMario(false);
+
+                                // 게임 종료 ( 함수 호출 )
+                                gameOver();
+
+                                isMarioDown = false;
+                            }, 1000);
+                        });
+                }
+            }
+        }
+        // 굼바와 마리오가 충돌하는 위치
+        function collision(b1, b2) {
+            b1Left = Number(b1.css("left").replace("px", ""));
+            b1Bottom = Number(b1.css("bottom").replace("px", ""));
+            b1Width = Number(b1.css("width").replace("px", ""));
+            b1Height = Number(b1.css("height").replace("px", ""));
+
+            b2Left = Number(b2.css("left").replace("px", "")) + 40;
+            b2Bottom = Number(b2.css("bottom").replace("px", "")) + 40;
+            b2Width = Number($(".goombaBlock").css("width").replace("px", "")) / 2;
+            b2Height = Number(b2.css("height").replace("px", "")) / 2;
+
+            let widthMatch = b1Left + b1Width > b2Left && b2Left + b2Width > b1Left;
+            let heightMatch = b1Bottom + b1Height > b2Bottom && b2Bottom + b2Height > b1Bottom;
+
+            return widthMatch && heightMatch;
+        }
+
+
+        // 점수 - 화면에 갱신
+        function setScore(score) {
+            $("#score").text("점수: " + score + "점");
+        }
+
+        // 랭킹 - 테이블에 추가
+        function rankLoad(score) {
+          // 기존 내용 지우기
+          ranking.empty();
+
+          ranking.append('<th>랭킹</th><th>이름</th><th>점수</th>');
+
+          for (let i = 0; i < ranks.length; i++) {
+            let rank = ranks[i];
+            ranking.append
+            (`<tr><td>${i+1}위</td><td>${rank.name}님</td><td>${rank.score}점</td></tr>`);
+          }
+        }
+
+        // 랭킹 - 정보 추가
+        function rank_information(name, score) {
+            let newRank = {
+                name: name,
+                score: score
+            };
+
+            ranks.push(newRank);
+
+            // 랭킹 정보 정렬
+            ranks.sort(function (a, b) {
+                return b.score - a.score;
+            });
+        }
+
+        // 게임 종료
+        function gameOver() {
+            clearTimeout();
+
+            clearInterval(marioInterval1);
+            clearInterval(goombaInterval1);
+
+            goomba.stop();
+            goombaInit(goomba);
+
+            rank_information(player, score);
+            score = 0;
+            setScore(score);
+
+            $("#bg").hide();
+            $("#game_over").show();
+        }
+
+        // 게임 시작
+        function gameStart() {
+            // 플레이어 이름 입력받기
+            let inputName = $("#id")
+                .val()
+                .substr(0, 3);
+            player = `${inputName}${ ''.repeat(3 - inputName.length)}`;
+
+            // 화면 - 게임
+            $("#bg").show();
+            $("#start_page").hide();
+
+            // 마리오 - 체크 시작
+            marioInterval1 = setInterval(() => marioDown(goomba), 10);
+
+            // 굼바 - 초기화, 동작 시작, 체크 시작
+            goombaInit(goomba);
+            goombaStart(goomba);
+            goombaInterval1 = setInterval(() => goombaDown(goomba, isgoombaDown1), 10);
+        }
+
+        // 게임 로그인
+        function gameLogin() {
+            // 화면 - 로그인
+            $("#game_over").hide();
+            $("#start_page").show();
+
+            // 랭킹 정보 테이블에 추가
+            rankLoad();
+        }
+
+        $(function () {
+            $("#replay").click(function () {
+                gameLogin();
+            });
+
+            $("#start").click(function () {
+                gameStart();
+            });
+
+            // 입력 - 키보드 입력 시 동작 수행
+            $("body").keydown(function (event) {
+                // 입력 - 스페이스바 키 입력시 마리오 점프
+                if (event.keyCode == 32) {
+                    // 마리오 - 점프 중이 아닐 때만 점프
+                    if (!isJump && !isMarioDown) {
+                        isJump = true;
+                        mario
+                            .animate({
+                                bottom: "+=300px"
+                            }, 800)
+                            .animate({
+                                bottom: "-=300px"
+                            }, 800, function () {
+                                isJump = false;
+                            });
+                    }
+                    // 입력 - 엔터 키 입력시 킬러 시작
+                } else if (event.keyCode == 13) {
+                    // 킬러 - 킬러가 동작 중이 아닐 때만 시작
+                    if (!isKill) {
+                        changeMario(true);
+                        killerStart();
+                    }
+                    // 화살표 위에 눌렀을 때, 이미지가 바뀌면서 더 높이 뛰고,
+                    // 뛰고 난 이후에는 킬러가 나가면서 공격가능
+                    // 뛰고나서 굼바 맞추면, 뛰면서 100점, 굼바 죽으면서 150점이 각각 올라간다!
+                } else if (event.keyCode == 38) {
+                    if(!isDoubleJump && !isMarioDown) {
+                        isDoubleJump = true;
+                        jumpMario(true);
+                        mario
+                            .animate({bottom: "+=400px"
+                        },800)
+                            .animate({bottom : "-=400px"
+                        }, 800 ,function () {
+                            isDoubleJump = false;
+                            killerStart();
+                        });
+                    }
+                }
+
+            });
+        });
+    </script>
+</html>
