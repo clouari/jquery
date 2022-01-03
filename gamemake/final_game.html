@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>랭킹 만들어보기</title>
+        <title>하다가 이상할 땐 돌아올 게임코드</title>
 
         <script
             src="https://code.jquery.com/jquery-3.6.0.js"
@@ -8,6 +8,9 @@
             crossorigin="anonymous"></script>
     </head>
     <style>
+        *{
+            margin: 0;
+        }
 
         #mario {
             width: 100px;
@@ -88,7 +91,7 @@
             <img src="backgroundani.gif" id="view">
             <div id="mario_block">
                 <img id="mario" src="man.gif">
-                <img id="attack_mario" src="g20161218215154_weqnoqcw.gif">
+                <img id="attack_mario" src="20161218215154_weqnoqcw.gif">
             </div>
             
             <div id="gumba_block"><img id="gumba" src="gb.gif"></div>
@@ -108,7 +111,7 @@
             자바스크립트 마리오
             <br/>
             <b>개발자 정다희</b>
-            <br/>
+            <br/><br />
             <button class="start">게임시작</button>
         </div>
 
@@ -117,6 +120,9 @@
         var jump = false;
         var killer = false;
         var score = 0;
+        var marioInterval;
+        var gumbaInterval;
+        var scoreInterval;
 
         function start() { //시작화면
 
@@ -142,9 +148,10 @@
             score = 0;
 
             setTimeout(gumba_start, 1000);
-            setInterval(mario_down, 10);
-            setInterval(gumba_down, 10);
-            setInterval(set_score, 10);
+            marioInterval = setInterval(mario_down, 10);
+            gumbaInterval = setInterval(gumba_down, 10);
+            scoreInterval = setInterval(set_score, 10);
+            clearInterval();
         }
 
         function gumba_start() {
@@ -172,7 +179,10 @@
         }
 
         function killer_start() {
-            $('#mario').prop('src', '20161218215154_weqnoqcw.gif')
+            $('#mario').prop('src', '20161218215154_weqnoqcw.gif');
+            $('#mario').css('width', '200px');
+            // 사이즈를 키워주고 싶을 때에는 밑에서 css로 지정해 주면 된다.
+            
             $("#killer_block").show(30);
             killer = true;
             $("#killer_block").animate({
@@ -182,7 +192,9 @@
                 $("#killer_block").hide();
                 $("#killer_block").css("left", "50px");
                 $('#mario').prop('src', 'man.gif');
-
+                $('#mario').css('width', '100px');
+                // 다만 여기서 복원을 해주지 않으면 키워준 상태 그대로 있으니,
+                // css로 크기 다시 지정해줄 것(원래 상태로)
             })
 
         }
@@ -197,6 +209,16 @@
             if (beat <= 110 && jump == false) {
                 $("#mario_block").hide();
                 $jump = true;
+
+                $("#gumba_block").stop();
+
+                $("#gumba_block").css("left", "");
+                $("#gumba_block").css("right", "10px");
+
+                clearInterval(marioInterval);
+                clearInterval(gumbaInterval);
+                clearInterval(scoreInterval);
+
                 score = 0;
                 close();
             }
